@@ -39,10 +39,9 @@ CREATE TABLE Customer_Order (
 CREATE TABLE Order_Contents (
     OrderID INT NOT NULL,
     ProductID INT NOT NULL,
-    ProductCost DECIMAL(3,2) NOT NULL,
     VendorID INT NOT NULL,
     QuantityOrdered INT NOT NULL,
-    PRIMARY KEY (OrderID, ProductID),
+    PRIMARY KEY (OrderID, ProductID, VendorID),
     FOREIGN KEY (OrderID) REFERENCES `Order`(OrderID),
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
     FOREIGN KEY (VendorID) REFERENCES Vendor(VendorID)
