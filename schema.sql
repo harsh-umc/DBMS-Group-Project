@@ -21,6 +21,31 @@ CREATE TABLE Vendor_Market(
   FOREIGN KEY (VendorID) REFERENCES Vendor(VendorID)
   );
 
+-- Harsh's Part
+
+CREATE TABLE Customer (
+    CustomerID INT PRIMARY KEY AUTO_INCREMENT,
+    CustomerName VARCHAR(15) NOT NULL,
+    CustomerEmail VARCHAR(30) NOT NULL,
+    CustomerBirthday DATE
+);
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(15) NOT NULL,
+    ProductCategory VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE Vendor_Inventory (
+    ProductID INT NOT NULL,
+    VendorID INT NOT NULL,
+    QuantityInStock INT NOT NULL,
+    ProductCost DECIMAL(3,2) NOT NULL,
+    PRIMARY KEY (ProductID, VendorID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (VendorID) REFERENCES Vendor(VendorID)
+);
+
 -- JD's Part
 CREATE TABLE Order_Details (
     OrderID INT AUTO_INCREMENT PRIMARY KEY,
