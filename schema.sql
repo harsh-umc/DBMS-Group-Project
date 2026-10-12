@@ -22,7 +22,7 @@ CREATE TABLE Vendor_Market(
   );
 
 -- JD's Part
-CREATE TABLE `Order` (
+CREATE TABLE Order_Details (
     OrderID INT AUTO_INCREMENT PRIMARY KEY,
     OrderCost DECIMAL(4,2) NOT NULL,
     DeliveryAddress VARCHAR(30) NOT NULL
@@ -33,7 +33,7 @@ CREATE TABLE Customer_Order (
     OrderID INT NOT NULL,
     PRIMARY KEY (CustomerID, OrderID),
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
-    FOREIGN KEY (OrderID) REFERENCES `Order`(OrderID)
+    FOREIGN KEY (OrderID) REFERENCES Order_Details(OrderID)
 );
 
 CREATE TABLE Order_Contents (
@@ -42,7 +42,7 @@ CREATE TABLE Order_Contents (
     VendorID INT NOT NULL,
     QuantityOrdered INT NOT NULL,
     PRIMARY KEY (OrderID, ProductID, VendorID),
-    FOREIGN KEY (OrderID) REFERENCES `Order`(OrderID),
+    FOREIGN KEY (OrderID) REFERENCES Order_Details(OrderID),
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
     FOREIGN KEY (VendorID) REFERENCES Vendor(VendorID)
 );
