@@ -48,3 +48,34 @@ SELECT ProductName, Quantity, VendorName, SUM(
 SELECT *
   FROM Customer;
 
+--Jd's part
+
+
+--Looking up a specific Farmer's Market
+SELECT MarketName, Address
+  FROM Farmers_Market
+  WHERE MarketID = 1;
+
+--Looking up Vendors at a specific Farmer's Market
+SELECT VendorName, StallNumber
+  FROM Vendor_Market
+  JOIN Vendor
+  ON Vendor_Market.VendorID = Vendor.VendorID
+  WHERE MarketID = 1;
+
+--Counting how many Vendors are at each Farmer's Market
+SELECT MarketName, COUNT(VendorID) AS TotalVendors
+  FROM Farmers_Market
+  LEFT JOIN Vendor_Market
+  ON Farmers_Market.MarketID = Vendor_Market.MarketID
+  GROUP BY Farmers_Market.MarketID, MarketName;
+
+--Looking up Farmer's Markets in alphabetical order
+SELECT MarketName, Address
+  FROM Farmers_Market
+  ORDER BY MarketName ASC;
+
+--Looking up Vendors by name
+SELECT VendorName, VendorWebsite
+  FROM Vendor
+  WHERE VendorName LIKE '%Farm%';
