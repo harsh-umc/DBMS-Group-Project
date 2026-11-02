@@ -148,3 +148,34 @@ VALUES (019, 'Country Greens', 'countrygreens.com');
 
 INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (020, 'Wildflower Farm', 'wildflowerfarm.com');
+
+
+-- Harsh's Part: 25 additional farmers market products (IDs 26-50)
+-- Product names and categories fit the Products table's VARCHAR(15) columns.
+INSERT INTO Products (ProductID, ProductName, ProductCategory)
+VALUES
+  (26, 'Blueberry Jam', 'Preserves'),
+  (27, 'Raspberry Jam', 'Preserves'),
+  (28, 'Peach Jam', 'Preserves'),
+  (29, 'Apple Butter', 'Preserves'),
+  (30, 'Pickled Beets', 'Preserves'),
+  (31, 'Dill Pickles', 'Preserves'),
+  (32, 'Salsa', 'Preserves'),
+  (33, 'Tomato Sauce', 'Preserves'),
+  (34, 'Apple Cider', 'Beverages'),
+  (35, 'Maple Syrup', 'Preserves'),
+  (36, 'Sourdough Bread', 'Bakery'),
+  (37, 'Banana Bread', 'Bakery'),
+  (38, 'Cinnamon Rolls', 'Bakery'),
+  (39, 'Blueberry Muffin', 'Bakery'),
+  (40, 'Oat Cookies', 'Bakery'),
+  (41, 'Carrot', 'Produce'),
+  (42, 'Spinach', 'Produce'),
+  (43, 'Kale', 'Produce'),
+  (44, 'Radish', 'Produce'),
+  (45, 'Zucchini', 'Produce'),
+  (46, 'Basil', 'Herbs'),
+  (47, 'Mint', 'Herbs'),
+  (48, 'Rosemary', 'Herbs'),
+  (49, 'Lavender', 'Herbs'),
+  (50, 'Sunflower', 'Flowers');
