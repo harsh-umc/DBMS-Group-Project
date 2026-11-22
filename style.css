@@ -1,0 +1,52 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+}
+
+h1 {
+    color: darkgreen;
+}
+
+nav {
+    margin: 20px 0;
+}
+
+button {
+    background-color: darkgreen;
+    color: white;
+    padding: 10px;
+    border: none;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: green;
+}
+
+section {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #cccccc;
+}
+
+.item {
+    border-bottom: 1px solid #dddddd;
+    padding: 10px;
+}
+
+input, select {
+    display: block;
+    padding: 8px;
+    margin: 10px 0;
+    width: 250px;
+    max-width: 90%;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
