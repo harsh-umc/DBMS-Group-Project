@@ -1,0 +1,26 @@
+-- Standalone demo setup for JavaFX application.
+-- Run on a local MySQL server. Does not modify original schema.sql or data.sql.
+CREATE DATABASE IF NOT EXISTS Market_Manager;
+USE Market_Manager;
+CREATE TABLE IF NOT EXISTS Farmers_Market (MarketID INT PRIMARY KEY AUTO_INCREMENT, MarketName VARCHAR(60) NOT NULL, Address VARCHAR(100) NOT NULL);
+CREATE TABLE IF NOT EXISTS Vendor (VendorID INT PRIMARY KEY AUTO_INCREMENT, VendorName VARCHAR(60) NOT NULL, VendorWebsite VARCHAR(100));
+CREATE TABLE IF NOT EXISTS Vendor_Market (MarketID INT NOT NULL, VendorID INT NOT NULL, StallNumber INT NOT NULL, PRIMARY KEY(MarketID,VendorID), FOREIGN KEY(MarketID) REFERENCES Farmers_Market(MarketID), FOREIGN KEY(VendorID) REFERENCES Vendor(VendorID));
+CREATE TABLE IF NOT EXISTS Products (ProductID INT PRIMARY KEY, ProductName VARCHAR(60) NOT NULL, ProductCategory VARCHAR(40) NOT NULL);
+CREATE TABLE IF NOT EXISTS Vendor_Inventory (ProductID INT NOT NULL, VendorID INT NOT NULL, QuantityInStock INT NOT NULL, ProductCost DECIMAL(8,2) NOT NULL, PRIMARY KEY(ProductID,VendorID), FOREIGN KEY(ProductID) REFERENCES Products(ProductID), FOREIGN KEY(VendorID) REFERENCES Vendor(VendorID));
+CREATE TABLE IF NOT EXISTS Customer (CustomerID INT PRIMARY KEY AUTO_INCREMENT, CustomerName VARCHAR(80) NOT NULL, CustomerEmail VARCHAR(100) NOT NULL, CustomerBirthday DATE);
+CREATE TABLE IF NOT EXISTS Order_Details (OrderID INT PRIMARY KEY AUTO_INCREMENT, OrderCost DECIMAL(10,2) NOT NULL, DeliveryAddress VARCHAR(150) NOT NULL);
+CREATE TABLE IF NOT EXISTS Customer_Order (CustomerID INT NOT NULL, OrderID INT NOT NULL, PRIMARY KEY(CustomerID,OrderID), FOREIGN KEY(CustomerID) REFERENCES Customer(CustomerID), FOREIGN KEY(OrderID) REFERENCES Order_Details(OrderID));
+CREATE TABLE IF NOT EXISTS Order_Contents (OrderID INT NOT NULL, ProductID INT NOT NULL, VendorID INT NOT NULL, QuantityOrdered INT NOT NULL, PRIMARY KEY(OrderID,ProductID,VendorID), FOREIGN KEY(OrderID) REFERENCES Order_Details(OrderID), FOREIGN KEY(ProductID) REFERENCES Products(ProductID), FOREIGN KEY(VendorID) REFERENCES Vendor(VendorID));
+INSERT IGNORE INTO Farmers_Market VALUES
+(1,'Downtown Farmers Market','123 Main St'),(2,'Riverside Farmers Market','456 River Rd'),(3,'Green Valley Market','789 Valley Dr'),(4,'Sunrise Farmers Market','101 Sunrise Ave'),(5,'Oakwood Farmers Market','202 Oak St'),(6,'Lakeside Farmers Market','303 Lake Rd'),(7,'Harvest Hill Market','404 Hill St'),(8,'Prairie Farmers Market','505 Prairie Ave'),(9,'Maple Grove Market','606 Maple Dr'),(10,'Fresh Fields Market','707 Field Rd');
+INSERT IGNORE INTO Vendor VALUES
+(1,'Green Acres','greenacres.com'),(2,'Sunny Farms','sunnyfarms.com'),(3,'Oak Hill Farm','oakhillfarm.com'),(4,'Fresh Harvest','freshharvest.com'),(5,'Riverbend Farm','riverbendfarm.com'),(6,'Blue Sky Farm','blueskyfarm.com'),(7,'Golden Fields','goldenfields.com'),(8,'Maple Creek','maplecreek.com'),(9,'Happy Hen Farm','happyhenfarm.com'),(10,'Prairie Roots','prairieroots.com'),(11,'Red Barn Farm','redbarnfarm.com'),(12,'Hilltop Produce','hilltopproduce.com'),(13,'Valley Fresh','valleyfresh.com'),(14,'Morning Dew','morningdew.com'),(15,'Cedar Grove','cedargrove.com'),(16,'Sweet Berry','sweetberry.com'),(17,'Meadow Farms','meadowfarms.com'),(18,'Farmhouse Eggs','farmhouseeggs.com'),(19,'Country Greens','countrygreens.com'),(20,'Wildflower Farm','wildflowerfarm.com');
+INSERT IGNORE INTO Products VALUES
+(1,'Apple','Produce'),(2,'Orange','Produce'),(3,'Pear','Produce'),(4,'Watermelon','Produce'),(5,'Pumpkin','Produce'),(6,'Strawberry','Produce'),(7,'Corn','Produce'),(8,'Tomato','Produce'),(9,'Potato','Produce'),(10,'Celery','Produce'),(11,'Egg','Animal Product'),(12,'Cow Milk','Animal Product'),(13,'Goat Milk','Animal Product'),(14,'Honey','Animal Product'),(15,'Cheese','Animal Product'),(16,'Beef','Meat'),(17,'Chicken','Meat'),(18,'Pork','Meat'),(19,'Turkey','Meat'),(20,'Sausage','Meat'),(21,'Wool','Textiles'),(22,'Hemp','Textiles'),(23,'Cotton','Textiles'),(24,'Linen','Textiles'),(25,'Silk','Textiles'),(26,'Blueberry Jam','Preserves'),(27,'Raspberry Jam','Preserves'),(28,'Peach Jam','Preserves'),(29,'Apple Butter','Preserves'),(30,'Pickled Beets','Preserves'),(31,'Dill Pickles','Preserves'),(32,'Salsa','Preserves'),(33,'Tomato Sauce','Preserves'),(34,'Apple Cider','Beverages'),(35,'Maple Syrup','Preserves'),(36,'Sourdough Bread','Bakery'),(37,'Banana Bread','Bakery'),(38,'Cinnamon Rolls','Bakery'),(39,'Blueberry Muffin','Bakery'),(40,'Oat Cookies','Bakery'),(41,'Carrot','Produce'),(42,'Spinach','Produce'),(43,'Kale','Produce'),(44,'Radish','Produce'),(45,'Zucchini','Produce'),(46,'Basil','Herbs'),(47,'Mint','Herbs'),(48,'Rosemary','Herbs'),(49,'Lavender','Herbs'),(50,'Sunflower','Flowers');
+-- Each market has two vendors; every vendor sells five products.
+INSERT IGNORE INTO Vendor_Market(MarketID,VendorID,StallNumber)
+SELECT FLOOR((VendorID-1)/2)+1, VendorID, MOD(VendorID-1,2)+1 FROM Vendor WHERE VendorID BETWEEN 1 AND 20;
+INSERT IGNORE INTO Vendor_Inventory(ProductID,VendorID,QuantityInStock,ProductCost)
+SELECT p.ProductID, FLOOR(MOD(p.ProductID-1,20))+1, 25, ROUND(2.00+MOD(p.ProductID,12)*0.75,2) FROM Products p;
+INSERT IGNORE INTO Vendor_Inventory(ProductID,VendorID,QuantityInStock,ProductCost)
+SELECT p.ProductID, FLOOR(MOD(p.ProductID+5,20))+1, 15, ROUND(2.50+MOD(p.ProductID,10)*0.65,2) FROM Products p;
