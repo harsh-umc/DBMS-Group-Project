@@ -34,7 +34,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <!-- Nikolai's draft remains untouched until generated jOOQ classes are available. -->
                     <excludes><exclude>**/Queries.java</exclude></excludes>
                 </configuration>
             </plugin>
