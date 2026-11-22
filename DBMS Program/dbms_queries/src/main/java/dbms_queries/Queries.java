@@ -1,5 +1,7 @@
 package dbms_queries;
 import java.util.*;
+import java.sql.*;
+import javax.sql.*;
 
 public class Queries{
 
