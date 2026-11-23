@@ -1,7 +1,8 @@
-CREATE DATABASE Market_Manager;
+CREATE DATABASE IF NOT EXISTS Market_Manager;
+USE Market_Manager;
 
 --Niko's Part
-CREATE TABLE Farmers_Market(
+CREATE TABLE IF NOT EXISTS Farmers_Market(
   MarketID INT PRIMARY KEY AUTO_INCREMENT,
   MarketName VARCHAR(30) NOT NULL,
   Address varchar(30) NOT NULL
@@ -14,9 +15,10 @@ CREATE TABLE Vendor(
   );
 
 CREATE TABLE Vendor_Market(
-  MarketID INT PRIMARY KEY,
-  VendorID INT PRIMARY KEY,
+  MarketID INT NOT NULL,
+  VendorID INT NOT NULL,
   StallNumber INT NOT NULL,
+  PRIMARY KEY (MarketID, VendorID),
   FOREIGN KEY (MarketID) REFERENCES Farmers_Market(MarketID),
   FOREIGN KEY (VendorID) REFERENCES Vendor(VendorID)
   );
@@ -40,7 +42,7 @@ CREATE TABLE Vendor_Inventory (
     ProductID INT NOT NULL,
     VendorID INT NOT NULL,
     QuantityInStock INT NOT NULL,
-    ProductCost DECIMAL(3,2) NOT NULL,
+    ProductCost DECIMAL(8,2) NOT NULL,
     PRIMARY KEY (ProductID, VendorID),
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
     FOREIGN KEY (VendorID) REFERENCES Vendor(VendorID)
@@ -49,7 +51,7 @@ CREATE TABLE Vendor_Inventory (
 -- JD's Part
 CREATE TABLE Order_Details (
     OrderID INT AUTO_INCREMENT PRIMARY KEY,
-    OrderCost DECIMAL(4,2) NOT NULL,
+    OrderCost DECIMAL(10,2) NOT NULL,
     DeliveryAddress VARCHAR(30) NOT NULL
 );
 
