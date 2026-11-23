@@ -1,8 +1,10 @@
--- Shared seed data for Market_Manager. Run schema.sql first.
+-- Shared demo seed data for Market_Manager. Run schema.sql first.
+-- INSERT IGNORE skips existing primary keys when this script is rerun.
+-- It does not overwrite existing records; review data conflicts separately.
 USE Market_Manager;
 
 -- Niko's product list (fixed SQL quoting and missing product #9: Carrot placeholder).
-INSERT INTO Products (ProductID, ProductName, ProductCategory) VALUES
+INSERT IGNORE INTO Products (ProductID, ProductName, ProductCategory) VALUES
 (0, 'Apple', 'Produce'),
 (1, 'Orange', 'Produce'),
 (2, 'Pear', 'Produce'),
@@ -30,107 +32,107 @@ INSERT INTO Products (ProductID, ProductName, ProductCategory) VALUES
 (24, 'Linen', 'Textiles'),
 (25, 'Silk', 'Textiles');
 
---Jd's part
+-- JD's part
 
 -- 10 Farmers Markets
 
-INSERT INTO Farmers_Market (MarketID, MarketName, Address)
+INSERT IGNORE INTO Farmers_Market (MarketID, MarketName, Address)
 VALUES (001, 'Downtown Farmers Market', '123 Main St');
 
-INSERT INTO Farmers_Market (MarketID, MarketName, Address)
+INSERT IGNORE INTO Farmers_Market (MarketID, MarketName, Address)
 VALUES (002, 'Riverside Farmers Market', '456 River Rd');
 
-INSERT INTO Farmers_Market (MarketID, MarketName, Address)
+INSERT IGNORE INTO Farmers_Market (MarketID, MarketName, Address)
 VALUES (003, 'Green Valley Market', '789 Valley Dr');
 
-INSERT INTO Farmers_Market (MarketID, MarketName, Address)
+INSERT IGNORE INTO Farmers_Market (MarketID, MarketName, Address)
 VALUES (004, 'Sunrise Farmers Market', '101 Sunrise Ave');
 
-INSERT INTO Farmers_Market (MarketID, MarketName, Address)
+INSERT IGNORE INTO Farmers_Market (MarketID, MarketName, Address)
 VALUES (005, 'Oakwood Farmers Market', '202 Oak St');
 
-INSERT INTO Farmers_Market (MarketID, MarketName, Address)
+INSERT IGNORE INTO Farmers_Market (MarketID, MarketName, Address)
 VALUES (006, 'Lakeside Farmers Market', '303 Lake Rd');
 
-INSERT INTO Farmers_Market (MarketID, MarketName, Address)
+INSERT IGNORE INTO Farmers_Market (MarketID, MarketName, Address)
 VALUES (007, 'Harvest Hill Market', '404 Hill St');
 
-INSERT INTO Farmers_Market (MarketID, MarketName, Address)
+INSERT IGNORE INTO Farmers_Market (MarketID, MarketName, Address)
 VALUES (008, 'Prairie Farmers Market', '505 Prairie Ave');
 
-INSERT INTO Farmers_Market (MarketID, MarketName, Address)
+INSERT IGNORE INTO Farmers_Market (MarketID, MarketName, Address)
 VALUES (009, 'Maple Grove Market', '606 Maple Dr');
 
-INSERT INTO Farmers_Market (MarketID, MarketName, Address)
+INSERT IGNORE INTO Farmers_Market (MarketID, MarketName, Address)
 VALUES (010, 'Fresh Fields Market', '707 Field Rd');
 
 
 -- 20 Vendors
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (001, 'Green Acres', 'greenacres.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (002, 'Sunny Farms', 'sunnyfarms.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (003, 'Oak Hill Farm', 'oakhillfarm.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (004, 'Fresh Harvest', 'freshharvest.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (005, 'Riverbend Farm', 'riverbendfarm.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (006, 'Blue Sky Farm', 'blueskyfarm.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (007, 'Golden Fields', 'goldenfields.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (008, 'Maple Creek', 'maplecreek.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (009, 'Happy Hen Farm', 'happyhenfarm.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (010, 'Prairie Roots', 'prairieroots.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (011, 'Red Barn Farm', 'redbarnfarm.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (012, 'Hilltop Produce', 'hilltopproduce.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (013, 'Valley Fresh', 'valleyfresh.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (014, 'Morning Dew', 'morningdew.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (015, 'Cedar Grove', 'cedargrove.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (016, 'Sweet Berry', 'sweetberry.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (017, 'Meadow Farms', 'meadowfarms.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (018, 'Farmhouse Eggs', 'farmhouseeggs.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (019, 'Country Greens', 'countrygreens.com');
 
-INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
+INSERT IGNORE INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (020, 'Wildflower Farm', 'wildflowerfarm.com');
 
 
 -- Demo relationships/inventory needed for the existing application queries.
 -- Assign each of the team's 20 vendors to one of its 10 markets.
-INSERT INTO Vendor_Market (MarketID, VendorID, StallNumber) VALUES
+INSERT IGNORE INTO Vendor_Market (MarketID, VendorID, StallNumber) VALUES
 (1, 1, 1),
 (2, 2, 1),
 (3, 3, 1),
@@ -153,7 +155,7 @@ INSERT INTO Vendor_Market (MarketID, VendorID, StallNumber) VALUES
 (10, 20, 2);
 
 -- Give each existing product a vendor listing (with stock and price).
-INSERT INTO Vendor_Inventory (ProductID, VendorID, QuantityInStock, ProductCost) VALUES
+INSERT IGNORE INTO Vendor_Inventory (ProductID, VendorID, QuantityInStock, ProductCost) VALUES
 (0, 1, 20, 2.00),
 (1, 2, 21, 2.75),
 (2, 3, 22, 3.50),
@@ -182,6 +184,6 @@ INSERT INTO Vendor_Inventory (ProductID, VendorID, QuantityInStock, ProductCost)
 (25, 6, 21, 2.75);
 
 -- Sample customers for the existing pre-order workflow.
-INSERT INTO Customer (CustomerID, CustomerName, CustomerEmail) VALUES
+INSERT IGNORE INTO Customer (CustomerID, CustomerName, CustomerEmail) VALUES
 (1, 'Sample Customer', 'sample1@example.com'),
 (2, 'Demo Customer', 'sample2@example.com');
