@@ -1,20 +1,20 @@
 CREATE DATABASE IF NOT EXISTS Market_Manager;
 USE Market_Manager;
 
---Niko's Part
+-- Niko's Part
 CREATE TABLE IF NOT EXISTS Farmers_Market(
   MarketID INT PRIMARY KEY AUTO_INCREMENT,
   MarketName VARCHAR(30) NOT NULL,
   Address varchar(30) NOT NULL
   );
 
-CREATE TABLE Vendor(
+CREATE TABLE IF NOT EXISTS Vendor(
   VendorID INT PRIMARY KEY AUTO_INCREMENT,
   VendorName VARCHAR(15) NOT NULL,
   VendorWebsite VARCHAR(30)
   );
 
-CREATE TABLE Vendor_Market(
+CREATE TABLE IF NOT EXISTS Vendor_Market(
   MarketID INT NOT NULL,
   VendorID INT NOT NULL,
   StallNumber INT NOT NULL,
@@ -25,20 +25,20 @@ CREATE TABLE Vendor_Market(
 
 -- Harsh's Part
 
-CREATE TABLE Customer (
+CREATE TABLE IF NOT EXISTS Customer (
     CustomerID INT PRIMARY KEY AUTO_INCREMENT,
     CustomerName VARCHAR(15) NOT NULL,
     CustomerEmail VARCHAR(30) NOT NULL,
     CustomerBirthday DATE
 );
 
-CREATE TABLE Products (
+CREATE TABLE IF NOT EXISTS Products (
     ProductID INT PRIMARY KEY,
     ProductName VARCHAR(15) NOT NULL,
     ProductCategory VARCHAR(15) NOT NULL
 );
 
-CREATE TABLE Vendor_Inventory (
+CREATE TABLE IF NOT EXISTS Vendor_Inventory (
     ProductID INT NOT NULL,
     VendorID INT NOT NULL,
     QuantityInStock INT NOT NULL,
@@ -49,13 +49,13 @@ CREATE TABLE Vendor_Inventory (
 );
 
 -- JD's Part
-CREATE TABLE Order_Details (
+CREATE TABLE IF NOT EXISTS Order_Details (
     OrderID INT AUTO_INCREMENT PRIMARY KEY,
     OrderCost DECIMAL(10,2) NOT NULL,
     DeliveryAddress VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE Customer_Order (
+CREATE TABLE IF NOT EXISTS Customer_Order (
     CustomerID INT NOT NULL,
     OrderID INT NOT NULL,
     PRIMARY KEY (CustomerID, OrderID),
@@ -63,7 +63,7 @@ CREATE TABLE Customer_Order (
     FOREIGN KEY (OrderID) REFERENCES Order_Details(OrderID)
 );
 
-CREATE TABLE Order_Contents (
+CREATE TABLE IF NOT EXISTS Order_Contents (
     OrderID INT NOT NULL,
     ProductID INT NOT NULL,
     VendorID INT NOT NULL,
