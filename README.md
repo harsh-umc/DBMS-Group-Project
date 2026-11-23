@@ -55,11 +55,26 @@ The final application will have a graphical user interface connected to the data
 
 ## JavaFX desktop application setup
 
-Requirements: Java 17, Maven, MySQL Server. The application is in `DBMS Program/dbms_queries`.
+This is a **JavaFX desktop app**, not a website. Source code is under `DBMS Program/dbms_queries`. Each teammate runs the JavaFX app and a **local MySQL server** on their own computer; GitHub shares code and SQL scripts, **not** the contents of anyone's local MySQL database.
 
-1. In MySQL Workbench, open `schema.sql` from the repository root and execute the entire file against your local MySQL server. Then execute `data.sql` **once** to load the shared sample records. The seed file contains explicit IDs and is not designed for repeated imports.
-2. Create a MySQL account for your local installation with access to the `Market_Manager` database, or use an existing account. **Never commit credentials.**
-3. In PowerShell, set your own local connection environment variables:
+### Requirements
+
+- Java JDK 17
+- Apache Maven
+- MySQL Server and MySQL Workbench
+
+### First-time database setup
+
+1. Clone or pull the repository.
+2. Open **`schema.sql`** from the repository root in MySQL Workbench, and execute the whole file. It creates the `Market_Manager` database and nine tables.
+3. Open **`data.sql`** from the repository root and execute the whole file. It seeds 10 markets, 20 vendors, 26 products, 20 vendor-market relationships, 26 inventory records, and 2 customers.
+4. The seed script uses `INSERT IGNORE` so existing primary keys are skipped on rerun. It **does not overwrite or repair existing data**. Check Workbench warnings if records are missing. Do not drop or delete a teammate's database just to rerun setup.
+
+### Local credentials and launch (Windows PowerShell)
+
+Use a MySQL account with access to `Market_Manager`. The credentials below are local to **your computer**. Never commit passwords or secrets to GitHub.
+
+From the **repository root**:
 
 ```powershell
 $env:DB_HOST="127.0.0.1"
@@ -71,9 +86,36 @@ cd "DBMS Program/dbms_queries"
 mvn clean javafx:run
 ```
 
-4. Browse Markets; select a market and click **View Vendors**; use Products to search inventory and choose a product for a pre-order. The order form accepts a customer ID from the sample `Customer` table (1 or 2), an address, and a quantity. Orders use a transaction and decrement stock on success.
-5. Run `queries.sql` in Workbench to inspect the team's SQL query examples. An order-contents example assumes order ID 1, so it returns no rows until that order exists.
+If your terminal is **already in** `DBMS Program/dbms_queries`, skip the `cd` line. Set the variables and run Maven in the **same terminal session**.
 
-**Already created a local database?** Back up any data you want to keep first. The scripts are for a fresh installation; do not run `data.sql` on top of the earlier three temporary test markets or partially imported team data, because explicit IDs will collide. For a clean *development-only* reset, run `DROP DATABASE Market_Manager;` in Workbench only after confirming it contains no important data, then execute `schema.sql` followed by `data.sql`.
+### Test checklist
 
-The JavaFX app uses the existing `Queries.java` methods; it does not require the separate web prototype files. Inventory and vendor-market assignments in `data.sql` are demo fixtures pending team review. Product ID 9 was unnamed in the original data and is temporarily labeled Carrot. The SQL examples, application and sample transaction still require a complete end-to-end team test.
+- **Markets:** 10 rows should load.
+- **Vendors:** Select Downtown Farmers Market, then **View Vendors**. Green Acres and Red Barn Farm should appear.
+- **Products:** 26 inventory listings should load.
+- **Search:** Search for `Apple` in Products; one matching listing should appear.
+- **Pre-Orders:** Select Apple, click **Pre-Order Selected Product**, enter an existing customer ID (1 or 2), a delivery address, and quantity 1. A successful order is stored in MySQL and reduces stock. **This changes your local database.**
+
+Verify initial seed counts in MySQL Workbench:
+
+```sql
+USE Market_Manager;
+SELECT
+  (SELECT COUNT(*) FROM Farmers_Market) AS Markets,
+  (SELECT COUNT(*) FROM Vendor) AS Vendors,
+  (SELECT COUNT(*) FROM Products) AS Products,
+  (SELECT COUNT(*) FROM Vendor_Inventory) AS Inventory,
+  (SELECT COUNT(*) FROM Vendor_Market) AS VendorMarkets,
+  (SELECT COUNT(*) FROM Customer) AS Customers;
+```
+
+Expected initial counts: **10, 20, 26, 26, 20, 2**.
+
+Run `queries.sql` in Workbench for additional SQL examples. Its order-contents example assumes order ID 1 and will return no rows before that order exists.
+
+### Notes for the team
+
+- The JavaFX UI calls methods in `Queries.java`; `DatabaseConnection.java` reads local environment variables.
+- The separate HTML/CSS/JavaScript prototype is **not needed** to run the JavaFX application.
+- Inventory and vendor-market assignments are demo fixtures pending team review. Product ID 9 is labeled Carrot as a placeholder.
+- Local end-to-end testing passed for markets, vendors, products, search, pre-order creation, and inventory update. **Independent teammate installation is still unverified.**
