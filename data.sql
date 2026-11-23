@@ -1,56 +1,34 @@
---Niko's part
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (000, Apple, Produce);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (001, Orange, Produce);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (002, Pear, Produce);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (003, Watermelon, Produce);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (004, Pumpkin, Produce);
-Insert into Products (ProductID, ProductName, ProductCategory)
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (005, Strawberry, Produce);
-VALUES (006, Corn, Produce);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (007, Tomato, Produce);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (008, Potato, Produce);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (009, , Produce);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (010, Celery, Produce);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (011, Egg, Animal Product);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (012, Cow Milk, Animal Product);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (013, Goat Milk, Animal Product);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (014, Honey, Animal Product);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (015, Cheese, Animal Product);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (016, Beef, Meat);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (017, Chicken, Meat);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (018, Pork, Meat);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (019, Turkey, Meat);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (020, Sausage, Meat);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (021, Wool, Textiles);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (022, Hemp, Textiles);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (023, Cotton, Textiles);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (024, Linen, Textiles);
-Insert into Products (ProductID, ProductName, ProductCategory)
-VALUES (025, Silk, Textiles);
+-- Shared seed data for Market_Manager. Run schema.sql first.
+USE Market_Manager;
+
+-- Niko's product list (fixed SQL quoting and missing product #9: Carrot placeholder).
+INSERT INTO Products (ProductID, ProductName, ProductCategory) VALUES
+(0, 'Apple', 'Produce'),
+(1, 'Orange', 'Produce'),
+(2, 'Pear', 'Produce'),
+(3, 'Watermelon', 'Produce'),
+(4, 'Pumpkin', 'Produce'),
+(5, 'Strawberry', 'Produce'),
+(6, 'Corn', 'Produce'),
+(7, 'Tomato', 'Produce'),
+(8, 'Potato', 'Produce'),
+(9, 'Carrot', 'Produce'),
+(10, 'Celery', 'Produce'),
+(11, 'Egg', 'Animal Product'),
+(12, 'Cow Milk', 'Animal Product'),
+(13, 'Goat Milk', 'Animal Product'),
+(14, 'Honey', 'Animal Product'),
+(15, 'Cheese', 'Animal Product'),
+(16, 'Beef', 'Meat'),
+(17, 'Chicken', 'Meat'),
+(18, 'Pork', 'Meat'),
+(19, 'Turkey', 'Meat'),
+(20, 'Sausage', 'Meat'),
+(21, 'Wool', 'Textiles'),
+(22, 'Hemp', 'Textiles'),
+(23, 'Cotton', 'Textiles'),
+(24, 'Linen', 'Textiles'),
+(25, 'Silk', 'Textiles');
 
 --Jd's part
 
@@ -148,3 +126,62 @@ VALUES (019, 'Country Greens', 'countrygreens.com');
 
 INSERT INTO Vendor (VendorID, VendorName, VendorWebsite)
 VALUES (020, 'Wildflower Farm', 'wildflowerfarm.com');
+
+
+-- Demo relationships/inventory needed for the existing application queries.
+-- Assign each of the team's 20 vendors to one of its 10 markets.
+INSERT INTO Vendor_Market (MarketID, VendorID, StallNumber) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1),
+(5, 5, 1),
+(6, 6, 1),
+(7, 7, 1),
+(8, 8, 1),
+(9, 9, 1),
+(10, 10, 1),
+(1, 11, 2),
+(2, 12, 2),
+(3, 13, 2),
+(4, 14, 2),
+(5, 15, 2),
+(6, 16, 2),
+(7, 17, 2),
+(8, 18, 2),
+(9, 19, 2),
+(10, 20, 2);
+
+-- Give each existing product a vendor listing (with stock and price).
+INSERT INTO Vendor_Inventory (ProductID, VendorID, QuantityInStock, ProductCost) VALUES
+(0, 1, 20, 2.00),
+(1, 2, 21, 2.75),
+(2, 3, 22, 3.50),
+(3, 4, 23, 4.25),
+(4, 5, 24, 5.00),
+(5, 6, 25, 5.75),
+(6, 7, 26, 6.50),
+(7, 8, 27, 7.25),
+(8, 9, 28, 2.00),
+(9, 10, 29, 2.75),
+(10, 11, 30, 3.50),
+(11, 12, 31, 4.25),
+(12, 13, 20, 5.00),
+(13, 14, 21, 5.75),
+(14, 15, 22, 6.50),
+(15, 16, 23, 7.25),
+(16, 17, 24, 2.00),
+(17, 18, 25, 2.75),
+(18, 19, 26, 3.50),
+(19, 20, 27, 4.25),
+(20, 1, 28, 5.00),
+(21, 2, 29, 5.75),
+(22, 3, 30, 6.50),
+(23, 4, 31, 7.25),
+(24, 5, 20, 2.00),
+(25, 6, 21, 2.75);
+
+-- Sample customers for the existing pre-order workflow.
+INSERT INTO Customer (CustomerID, CustomerName, CustomerEmail) VALUES
+(1, 'Sample Customer', 'sample1@example.com'),
+(2, 'Demo Customer', 'sample2@example.com');
