@@ -1,81 +1,60 @@
---Niko's part
+-- Existing team query examples, corrected for MySQL.
+USE Market_Manager;
 
---Queries can have WHERE clauses added to them to narrow down searchs or to select specific things
+-- Niko's part
+-- Looking up farmers markets
+SELECT MarketName, Address FROM Farmers_Market;
 
---Looking up Farmer's Markets
-SELECT MarketName, Address 
-  FROM Farmers_Market;
+-- Looking up vendors
+SELECT VendorName, VendorWebsite FROM Vendor;
 
---Looking up Vendors
-SELECT VendorName, VendorWebsite 
-  FROM Vendor;
+-- Vendors at each farmers market
+SELECT fm.MarketName, v.VendorName, vm.StallNumber
+FROM Vendor_Market vm
+JOIN Farmers_Market fm ON vm.MarketID = fm.MarketID
+JOIN Vendor v ON vm.VendorID = v.VendorID
+ORDER BY fm.MarketName, vm.StallNumber;
 
---Looking up what Vendors are at what Farmer's Markets
-SELECT MarketName, VendorName, StallNumber
-  FROM Vendor_Market 
-  RIGHT JOIN Farmers_Market 
-  ON Vendor_Market.MarketID = Farmers_Market.MarketID 
-  RIGHT JOIN Vendor 
-  ON Vendor_Market.VendorID = Vendor.VendorID
-  GROUP BY MarketName;
+-- Looking up products
+SELECT ProductName FROM Products;
 
---Looking up products
-SELECT ProductName 
-  FROM Product;
+-- What vendors sell
+SELECT v.VendorName, p.ProductName
+FROM Vendor_Inventory vi
+JOIN Products p ON vi.ProductID = p.ProductID
+JOIN Vendor v ON vi.VendorID = v.VendorID
+ORDER BY v.VendorName, p.ProductName;
 
---Looking up what Vendors sell
-SELECT VendorName, ProductName
-  FROM Vendor_Inventory
-  RIGHT JOIN Products
-  ON Vendor_Inventory.ProductID = Products.ProductID
-  Right Join Vendor
-  ON Vendor_Inventory.VendorID = Vendor.VendorID
-  GROUP BY VendorName;
+-- Contents of a specific order (change the order ID for your test)
+SELECT oc.OrderID, p.ProductName, oc.QuantityOrdered, v.VendorName,
+       (oc.QuantityOrdered * vi.ProductCost) AS LineTotal
+FROM Order_Contents oc
+JOIN Products p ON oc.ProductID = p.ProductID
+JOIN Vendor v ON oc.VendorID = v.VendorID
+JOIN Vendor_Inventory vi ON vi.ProductID = oc.ProductID AND vi.VendorID = oc.VendorID
+WHERE oc.OrderID = 1;
 
--- Looking at what you have ordered
-SELECT ProductName, Quantity, VendorName, SUM(
-  FROM Order_Contents
-  RIGHT JOIN Products
-  ON Order_Contents.ProductID = Products.ProductID
-  Right JOIN Vendor
-  ON Order_Contents.VendorID = Vendor.VendorID
-  RIGHT JOIN Order_Details
-  ON Order_Contents.OrderID = Order_Details.OrderID
-  WHERE OrderID = --entered OrderID
-  GROUP BY VendorName;
+-- Customer information
+SELECT * FROM Customer;
 
---Looking up Customer Infromation (for the Vendors)
-SELECT *
-  FROM Customer;
+-- JD's part
+-- A specific farmers market
+SELECT MarketName, Address FROM Farmers_Market WHERE MarketID = 1;
 
---Jd's part
+-- Vendors at a specific farmers market
+SELECT v.VendorName, vm.StallNumber
+FROM Vendor_Market vm
+JOIN Vendor v ON vm.VendorID = v.VendorID
+WHERE vm.MarketID = 1;
 
+-- Count vendors at each market
+SELECT fm.MarketName, COUNT(vm.VendorID) AS TotalVendors
+FROM Farmers_Market fm
+LEFT JOIN Vendor_Market vm ON fm.MarketID = vm.MarketID
+GROUP BY fm.MarketID, fm.MarketName;
 
---Looking up a specific Farmer's Market
-SELECT MarketName, Address
-  FROM Farmers_Market
-  WHERE MarketID = 1;
+-- Markets in alphabetical order
+SELECT MarketName, Address FROM Farmers_Market ORDER BY MarketName ASC;
 
---Looking up Vendors at a specific Farmer's Market
-SELECT VendorName, StallNumber
-  FROM Vendor_Market
-  JOIN Vendor
-  ON Vendor_Market.VendorID = Vendor.VendorID
-  WHERE MarketID = 1;
-
---Counting how many Vendors are at each Farmer's Market
-SELECT MarketName, COUNT(VendorID) AS TotalVendors
-  FROM Farmers_Market
-  LEFT JOIN Vendor_Market
-  ON Farmers_Market.MarketID = Vendor_Market.MarketID
-  GROUP BY Farmers_Market.MarketID, MarketName;
-
---Looking up Farmer's Markets in alphabetical order
-SELECT MarketName, Address
-  FROM Farmers_Market
-  ORDER BY MarketName ASC;
-
---Looking up Vendors by name
-SELECT VendorName, VendorWebsite
-  FROM Vendor
-  WHERE VendorName LIKE '%Farm%';
+-- Find vendors by name
+SELECT VendorName, VendorWebsite FROM Vendor WHERE VendorName LIKE '%Farm%';
